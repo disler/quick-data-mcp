@@ -1,0 +1,152 @@
+[
+  {
+    "order_id": "ord_001",
+    "customer_id": "cust_123",
+    "product_category": "electronics",
+    "order_value": 299.99,
+    "order_date": "2024-11-15",
+    "region": "west_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_002",
+    "customer_id": "cust_124",
+    "product_category": "books",
+    "order_value": 29.99,
+    "order_date": "2024-11-14",
+    "region": "midwest",
+    "payment_method": "paypal",
+    "customer_segment": "standard"
+  },
+  {
+    "order_id": "ord_003",
+    "customer_id": "cust_125",
+    "product_category": "clothing",
+    "order_value": 89.5,
+    "order_date": "2024-11-13",
+    "region": "east_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_004",
+    "customer_id": "cust_126",
+    "product_category": "electronics",
+    "order_value": 599.99,
+    "order_date": "2024-11-12",
+    "region": "west_coast",
+    "payment_method": "debit_card",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_005",
+    "customer_id": "cust_127",
+    "product_category": "home_garden",
+    "order_value": 149.99,
+    "order_date": "2024-11-11",
+    "region": "south",
+    "payment_method": "credit_card",
+    "customer_segment": "standard"
+  },
+  {
+    "order_id": "ord_006",
+    "customer_id": "cust_128",
+    "product_category": "books",
+    "order_value": 19.99,
+    "order_date": "2024-11-10",
+    "region": "midwest",
+    "payment_method": "paypal",
+    "customer_segment": "basic"
+  },
+  {
+    "order_id": "ord_007",
+    "customer_id": "cust_129",
+    "product_category": "electronics",
+    "order_value": 1299.99,
+    "order_date": "2024-11-09",
+    "region": "east_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_008",
+    "customer_id": "cust_130",
+    "product_category": "clothing",
+    "order_value": 45.0,
+    "order_date": "2024-11-08",
+    "region": "west_coast",
+    "payment_method": "debit_card",
+    "customer_segment": "standard"
+  },
+  {
+    "order_id": "ord_009",
+    "customer_id": "cust_131",
+    "product_category": "sports",
+    "order_value": 79.99,
+    "order_date": "2024-11-07",
+    "region": "south",
+    "payment_method": "credit_card",
+    "customer_segment": "standard"
+  },
+  {
+    "order_id": "ord_010",
+    "customer_id": "cust_132",
+    "product_category": "home_garden",
+    "order_value": 225.5,
+    "order_date": "2024-11-06",
+    "region": "midwest",
+    "payment_method": "paypal",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_011",
+    "customer_id": "cust_133",
+    "product_category": "books",
+    "order_value": 39.99,
+    "order_date": "2024-11-05",
+    "region": "east_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "basic"
+  },
+  {
+    "order_id": "ord_012",
+    "customer_id": "cust_134",
+    "product_category": "electronics",
+    "order_value": 449.99,
+    "order_date": "2024-11-04",
+    "region": "west_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_013",
+    "customer_id": "cust_135",
+    "product_category": "clothing",
+    "order_value": 120.0,
+    "order_date": "2024-11-03",
+    "region": "south",
+    "payment_method": "debit_card",
+    "customer_segment": "standard"
+  },
+  {
+    "order_id": "ord_014",
+    "customer_id": "cust_136",
+    "product_category": "sports",
+    "order_value": 159.99,
+    "order_date": "2024-11-02",
+    "region": "midwest",
+    "payment_method": "paypal",
+    "customer_segment": "premium"
+  },
+  {
+    "order_id": "ord_015",
+    "customer_id": "cust_137",
+    "product_category": "home_garden",
+    "order_value": 89.99,
+    "order_date": "2024-11-01",
+    "region": "east_coast",
+    "payment_method": "credit_card",
+    "customer_segment": "standard"
+  }
+]

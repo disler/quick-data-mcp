@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "quick-data": {
+      "command": "/path/to/uv",
+      "args": [
+        "--directory",
+        "/path/to/your/quick-data-mcp",
+        "run",
+        "python",
+        "main.py"
+      ],
+      "env": {
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
