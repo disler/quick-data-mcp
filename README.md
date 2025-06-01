@@ -96,3 +96,10 @@ See [quick-data-mcp/README.md](quick-data-mcp/README.md) for complete setup and 
 ## Resources
 - MCP Clients: https://modelcontextprotocol.io/clients
 - Claude Code Resource Support Github Issue: https://github.com/anthropics/claude-code/issues/545
+
+## Master AI Coding
+Learn to code with AI with foundational [Principles of AI Coding](https://agenticengineer.com/principled-ai-coding?y=jprompt)
+
+Follow the [IndyDevDan youtube channel](https://www.youtube.com/@indydevdan) for more AI coding tips and tricks.
+
+Use the best Agentic Coding Tool: [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview)
