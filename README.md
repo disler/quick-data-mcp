@@ -8,6 +8,8 @@
 >
 > See [quick-data-mcp](quick-data-mcp/README.md) for details on the MCP server
 
+<img src="./images/mcp-server-prompts.png" alt="MCP Server Prompts" style="max-width: 800px;">
+
 ## Leading Questions
 
 We experiment with three leading questions:
@@ -95,7 +97,7 @@ See [quick-data-mcp/README.md](quick-data-mcp/README.md) for complete setup and 
 
 ## Resources
 - MCP Clients: https://modelcontextprotocol.io/clients
-- Claude Code Resource Support Github Issue: https://github.com/anthropics/claude-code/issues/545
+- Claude Code Resource Support Github Issue: https://github.com/anthropics/claude-code/issuesç/545
 
 ## Master AI Coding
 Learn to code with AI with foundational [Principles of AI Coding](https://agenticengineer.com/principled-ai-coding?y=jprompt)
