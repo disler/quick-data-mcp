@@ -30,10 +30,12 @@ class AnalyticsOrchestrator:
         
         This prompt orchestrates other prompts and tools for comprehensive analysis.
         """
-        if dataset_name not in self.enhanced_manager.schemas:
+        # Check if dataset exists in multiple possible locations
+        if dataset_name not in self.enhanced_manager.schemas and dataset_name not in dataset_schemas:
             return f"Dataset '{dataset_name}' not loaded. Use load_dataset() tool first."
         
-        schema = self.enhanced_manager.schemas[dataset_name]
+        # Get schema from enhanced manager first, fallback to dataset_schemas
+        schema = self.enhanced_manager.schemas.get(dataset_name) or dataset_schemas.get(dataset_name)
         
         # Stage 1: Data Assessment
         workflow = f"""# 🎯 Adaptive Analytics Workflow: {dataset_name}

@@ -8,7 +8,7 @@ import json
 
 # Add src to Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, 'quick-data-mcp', 'src')
+src_path = os.path.join(current_dir, 'src')
 sys.path.insert(0, src_path)
 
 print(f"Adding {src_path} to Python path")
@@ -21,10 +21,10 @@ except ImportError as e:
     print(f"❌ Failed to import AdvancedCodeExecutor: {e}")
 
 try:
-    from mcp_server.models.schemas import DatasetManager
-    print("✅ DatasetManager imported successfully")
+    from mcp_server.managers.enhanced_dataset_manager import EnhancedDatasetManager
+    print("✅ EnhancedDatasetManager imported successfully")
 except ImportError as e:
-    print(f"❌ Failed to import DatasetManager: {e}")
+    print(f"❌ Failed to import EnhancedDatasetManager: {e}")
 
 
 async def test_basic_functionality():
@@ -38,15 +38,16 @@ async def test_basic_functionality():
     print("-" * 30)
     
     try:
-        dataset_path = "quick-data-mcp/data/ecommerce_orders.json"
+        dataset_path = "data/ecommerce_orders.json"
         dataset_name = "test_ecommerce"
         
-        result = DatasetManager.load_dataset(dataset_path, dataset_name)
+        manager = EnhancedDatasetManager()
+        result = manager.load_dataset(dataset_path, dataset_name)
         print(f"✅ Dataset loaded: {result}")
         
-        # Get dataset info
-        info = DatasetManager.get_dataset_info(dataset_name)
-        print(f"✅ Dataset info: rows={info['shape'][0]}, cols={info['shape'][1]}")
+        # Get dataset info (using analytics summary instead)
+        summary = manager.get_analytics_summary(dataset_name)
+        print(f"✅ Dataset info: rows={result.get('rows', 0)}, cols={len(result.get('columns', []))}")
         
     except Exception as e:
         print(f"❌ Dataset loading failed: {e}")
@@ -57,7 +58,7 @@ async def test_basic_functionality():
     print("-" * 30)
     
     try:
-        executor = AdvancedCodeExecutor()
+        executor = AdvancedCodeExecutor(manager)  # Pass the same manager instance
         print("✅ AdvancedCodeExecutor initialized")
         
         # Test simple code execution
