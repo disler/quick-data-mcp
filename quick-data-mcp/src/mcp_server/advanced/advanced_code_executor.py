@@ -4,10 +4,11 @@ import json
 import textwrap
 import re
 import ast
-from typing import Dict, List
+from typing import Dict, List, Any
 from dataclasses import dataclass
 from datetime import datetime
 from ..managers.enhanced_dataset_manager import EnhancedDatasetManager
+from ..models.schemas import loaded_datasets, dataset_schemas
 import pandas as pd
 import numpy as np
 
@@ -91,12 +92,17 @@ class AdvancedCodeExecutor:
 
     async def _create_execution_context(self, dataset_name: str, code: str) -> CodeExecutionContext:
         """Create comprehensive execution context."""
-        # Check if dataset exists in enhanced manager
-        if dataset_name not in self.enhanced_manager.datasets:
-            raise ValueError(f"Dataset '{dataset_name}' not loaded. Use load_dataset() first.")
-
-        df = self.enhanced_manager.datasets[dataset_name]
-        schema = self.enhanced_manager.schemas.get(dataset_name)
+        # Check if dataset exists in MCP global storage first
+        if dataset_name not in loaded_datasets:
+            # Fallback to enhanced manager
+            if dataset_name not in self.enhanced_manager.datasets:
+                raise ValueError(f"Dataset '{dataset_name}' not loaded. Use load_dataset() first.")
+            df = self.enhanced_manager.datasets[dataset_name]
+            schema = self.enhanced_manager.schemas.get(dataset_name)
+        else:
+            # Use MCP global storage
+            df = loaded_datasets[dataset_name]
+            schema = dataset_schemas.get(dataset_name)
 
         # Build schema information
         schema_info = {}
@@ -207,7 +213,10 @@ warnings.filterwarnings('ignore')
 """
 
         # Dataset context injection
-        df = self.enhanced_manager.datasets[context.dataset_name]
+        if context.dataset_name in loaded_datasets:
+            df = loaded_datasets[context.dataset_name]
+        else:
+            df = self.enhanced_manager.datasets[context.dataset_name]
         dataset_json = df.to_json(orient='records')
         schema_json = json.dumps(context.schema_info, indent=2)
 
@@ -480,8 +489,13 @@ except Exception as e:
             }
 
             # Inject the actual dataframe if context is available
-            if context and context.dataset_name in self.enhanced_manager.datasets:
-                exec_globals['df'] = self.enhanced_manager.datasets[context.dataset_name]
+            if context:
+                if context.dataset_name in loaded_datasets:
+                    exec_globals['df'] = loaded_datasets[context.dataset_name]
+                elif context.dataset_name in self.enhanced_manager.datasets:
+                    exec_globals['df'] = self.enhanced_manager.datasets[context.dataset_name]
+                else:
+                    raise ValueError(f"Dataset '{context.dataset_name}' not found")
                 exec_globals['DATASET_NAME'] = context.dataset_name
                 exec_globals['DATASET_INFO'] = context.schema_info
 
@@ -553,7 +567,7 @@ except Exception as e:
                     print(f"❌ Groupby column '{groupby_col}' not found")
                     return None
 
-                result = df.groupby(groupby_col).agg(agg_dict).head(top_n)
+                result = df.groupby(groupby_col, observed=False).agg(agg_dict).head(top_n)
                 print(
                     f"✅ Grouped by '{groupby_col}' - showing top {min(top_n, len(result))} results")
                 return result

@@ -4,25 +4,29 @@
 import asyncio
 import sys
 import os
+import pytest
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, 'quick-data-mcp', 'src')
+current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+src_path = os.path.join(current_dir, 'src')
 sys.path.insert(0, src_path)
 
 from mcp_server.advanced.advanced_code_executor import AdvancedCodeExecutor
-from mcp_server.models.schemas import DatasetManager
+from mcp_server.managers.enhanced_dataset_manager import EnhancedDatasetManager
 
-async def final_test():
+@pytest.mark.asyncio
+async def test_final_validation():
     """Run final comprehensive test."""
     
     print("🎯 FINAL ADVANCED CODE EXECUTION TEST")
     print("=" * 60)
     
-    # Load dataset
-    DatasetManager.load_dataset("quick-data-mcp/data/ecommerce_orders.json", "final_test")
+    # Create enhanced manager and executor with shared instance
+    manager = EnhancedDatasetManager()
+    executor = AdvancedCodeExecutor(manager)
     
-    # Create executor
-    executor = AdvancedCodeExecutor()
+    # Load dataset
+    load_result = manager.load_dataset("data/ecommerce_orders.json", "final_test")
+    print(f"📊 Dataset loaded: {load_result['rows']} rows, {len(load_result['columns'])} columns")
     
     # Test 1: AI Helper Functions
     print("\n🤖 Test: AI Helper Functions")
@@ -169,5 +173,3 @@ performance_check()
     print("🎉 Your Feature 3 implementation is FULLY OPERATIONAL!")
     print("Ready for production analytics workflows! 🚀")
 
-if __name__ == "__main__":
-    asyncio.run(final_test())

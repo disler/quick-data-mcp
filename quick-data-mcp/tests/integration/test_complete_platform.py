@@ -5,9 +5,10 @@ import asyncio
 import sys
 import os
 import json
+import pytest
 
 # Add src to Python path
-current_dir = os.path.dirname(os.path.abspath(__file__))
+current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 src_path = os.path.join(current_dir, 'src')
 sys.path.insert(0, src_path)
 
@@ -27,6 +28,7 @@ except ImportError as e:
     print(f"❌ Failed to import EnhancedDatasetManager: {e}")
 
 
+@pytest.mark.asyncio
 async def test_basic_functionality():
     """Test basic functionality that we know exists."""
     
@@ -223,32 +225,3 @@ if len(numeric_cols) >= 1:
     return True
 
 
-async def main():
-    """Run the test."""
-    try:
-        print("🧪 COMPREHENSIVE PLATFORM TEST")
-        print("Testing Feature 3: Advanced Code Execution")
-        print("=" * 80)
-        
-        success = await test_basic_functionality()
-        
-        if success:
-            print(f"\n🏆 TEST RESULT: SUCCESS! 🎉")
-            print(f"Your advanced analytics code execution system is working perfectly!")
-            print(f"Ready for production use with:")
-            print(f"  • AI-powered helper functions")
-            print(f"  • Comprehensive safety analysis")
-            print(f"  • Performance monitoring")
-            print(f"  • Intelligent error handling")
-        else:
-            print(f"\n⚠️ TEST RESULT: Some issues detected")
-            print(f"Check the error messages above for troubleshooting.")
-            
-    except Exception as e:
-        print(f"\n❌ Test execution error: {e}")
-        import traceback
-        traceback.print_exc()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
