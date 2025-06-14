@@ -1,6 +1,5 @@
 """Dataset first look prompt implementation."""
 
-from mcp.server.fastmcp.prompts import base
 from typing import List, Optional
 from ..models.schemas import DatasetManager, dataset_schemas
 

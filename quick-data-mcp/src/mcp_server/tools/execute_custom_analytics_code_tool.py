@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Dict, Any, Optional
 from ..models.schemas import DatasetManager, loaded_datasets, dataset_schemas
+from ..advanced.advanced_code_executor import AdvancedCodeExecutor
 
 
 async def execute_custom_analytics_code(dataset_name: str, python_code: str) -> str:
@@ -72,3 +73,41 @@ except Exception as e:
             
     except Exception as e:
         return f"EXECUTION ERROR: {type(e).__name__}: {str(e)}"
+
+
+async def execute_enhanced_analytics_code(
+    dataset_name: str, 
+    python_code: str,
+    execution_mode: str = "safe",
+    include_ai_context: bool = True,
+    timeout_seconds: int = 30
+) -> dict:
+    """
+    Enhanced custom Python code execution with AI context and safety features.
+    
+    This function provides:
+    - Automatic context injection with dataset schema
+    - Code safety analysis and suggestions
+    - Performance monitoring and optimization hints
+    - Execution history tracking
+    - AI-generated helper functions
+    - Template suggestions for common patterns
+    
+    Args:
+        dataset_name: Name of the loaded dataset to analyze
+        python_code: Python code to execute
+        execution_mode: Execution safety mode ('safe', 'standard', 'advanced')
+        include_ai_context: Whether to include AI helper functions
+        timeout_seconds: Maximum execution time in seconds
+        
+    Returns:
+        dict: Enhanced execution result with insights and suggestions
+    """
+    executor = AdvancedCodeExecutor()
+    return await executor.execute_enhanced_analytics_code(
+        dataset_name=dataset_name,
+        python_code=python_code,
+        execution_mode=execution_mode,
+        include_ai_context=include_ai_context,
+        timeout_seconds=timeout_seconds
+    )
