@@ -5,6 +5,7 @@ from .config.settings import settings
 from .models.schemas import ChartConfig
 from . import tools
 from .resources import data_resources
+from .tools.execute_custom_analytics_code_tool import execute_enhanced_analytics_code
 from .prompts import (
     dataset_first_look, segmentation_workshop, data_quality_assessment, correlation_investigation,
     pattern_discovery_session, insight_generation_workshop, dashboard_design_consultation, find_datasources, list_mcp_assets
@@ -214,6 +215,109 @@ async def execute_custom_analytics_code(dataset_name: str, python_code: str) -> 
         str: Combined stdout and stderr output from code execution
     """
     return await tools.execute_custom_analytics_code(dataset_name, python_code)
+
+
+@mcp.tool()
+async def execute_enhanced_analytics_code_tool(
+    dataset_name: str, 
+    python_code: str,
+    execution_mode: str = "safe",
+    include_ai_context: bool = True,
+    timeout_seconds: int = 30
+) -> dict:
+    """
+    Enhanced custom Python code execution with AI context, safety analysis, and performance monitoring.
+    
+    This advanced tool provides:
+    - 🔍 Automatic context injection with dataset schema information
+    - 🛡️ Code safety analysis and security violation detection
+    - ⚡ Performance monitoring and optimization hints
+    - 📊 Execution history tracking across sessions
+    - 🤖 AI-generated helper functions and smart suggestions
+    - 📝 Template suggestions for common analytics patterns
+    - 🔧 Enhanced error handling with intelligent debugging hints
+    
+    KEY FEATURES:
+    
+    **AI Helper Functions (when include_ai_context=True):**
+    - `smart_describe(df, 'column')` - Intelligent column analysis with outlier detection
+    - `safe_groupby(df, 'group_col', {'agg_col': 'mean'})` - Safe grouping with error handling
+    - `quick_viz(df, 'x_col', 'y_col')` - Automatic visualization type selection
+    - `get_analysis_suggestions()` - AI-powered analysis recommendations
+    - `performance_check()` - Monitor execution time and memory usage
+    
+    **Safety Features:**
+    - Blocks dangerous operations (file system, subprocess, exec/eval)
+    - Validates column existence before execution
+    - Detects performance anti-patterns (iterrows, deprecated methods)
+    - Provides optimization suggestions for large datasets
+    
+    **Enhanced Output:**
+    - Rich execution context with dataset metadata
+    - Performance metrics and memory usage tracking
+    - Intelligent error messages with fix suggestions
+    - Follow-up analysis recommendations
+    - Execution insights extraction
+    
+    **Execution Modes:**
+    - 'safe': Maximum security, basic context (recommended)
+    - 'standard': Balanced features and safety
+    - 'advanced': Full feature set with extended monitoring
+    
+    USAGE EXAMPLES:
+    
+    Basic enhanced analysis:
+    ```python
+    # Dataset info is automatically available as DATASET_INFO
+    print("Working with:", DATASET_NAME)
+    smart_describe(df)  # AI-powered dataset overview
+    get_analysis_suggestions()  # Get AI recommendations
+    ```
+    
+    Advanced pattern analysis:
+    ```python
+    # Use safe helper functions
+    numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    if len(numeric_cols) >= 2:
+        correlations = df[numeric_cols].corr()
+        print("Strong correlations found:")
+        # AI helper automatically identifies meaningful relationships
+        
+    # Performance monitoring
+    performance_check()  # Shows execution time and memory usage
+    ```
+    
+    Smart visualizations:
+    ```python
+    # AI automatically selects appropriate chart types
+    quick_viz(df, 'age', 'salary')  # Scatter plot for numeric vs numeric
+    quick_viz(df, 'department')     # Bar chart for categorical
+    ```
+    
+    Args:
+        dataset_name: Name of the loaded dataset to analyze
+        python_code: Python code to execute with enhanced context
+        execution_mode: Safety mode ('safe', 'standard', 'advanced')
+        include_ai_context: Include AI helper functions and suggestions
+        timeout_seconds: Maximum execution time (default: 30s)
+        
+    Returns:
+        dict: Enhanced execution result containing:
+            - status: 'success', 'analysis_error', 'timeout', or 'system_error'
+            - execution_output: Raw output from code execution
+            - insights: AI-extracted insights from execution
+            - follow_up_suggestions: Intelligent next-step recommendations
+            - performance_metrics: Execution time and resource usage
+            - execution_history_count: Number of previous executions on this dataset
+            - errors/suggestions: If analysis_error, contains safety/syntax issues
+    """
+    return await execute_enhanced_analytics_code(
+        dataset_name=dataset_name,
+        python_code=python_code,
+        execution_mode=execution_mode,
+        include_ai_context=include_ai_context,
+        timeout_seconds=timeout_seconds
+    )
 
 
 # ============================================================================
