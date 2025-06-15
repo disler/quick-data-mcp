@@ -1,0 +1,1 @@
+- If you get any errors, stop and fix the problem before proceeding.
