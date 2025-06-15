@@ -1,137 +1,120 @@
-# Sample Datasets for Analytics MCP Server
+# Sample Datasets
 
-This directory contains sample datasets for testing and demonstrating the generic data analytics MCP server capabilities.
+This directory contains sample datasets for testing and demonstration purposes.
 
-## Datasets
+## Available Datasets
 
-### 1. E-commerce Orders (`ecommerce_orders.json`)
-- **Description**: Sample e-commerce transaction data
-- **Format**: JSON
-- **Rows**: 15 orders
-- **Use Cases**: Sales analysis, customer segmentation, regional performance
-- **Key Columns**:
-  - `order_value` (numerical): Order amount in USD
-  - `product_category` (categorical): Product type
-  - `region` (categorical): Geographic region
-  - `customer_segment` (categorical): Customer tier
-  - `order_date` (temporal): Transaction date
+### ecommerce_orders.json
+E-commerce order data with customer transactions.
 
-### 2. Employee Survey (`employee_survey.csv`)
-- **Description**: Employee satisfaction and workforce data
-- **Format**: CSV
-- **Rows**: 25 employees
-- **Use Cases**: HR analytics, satisfaction analysis, departmental comparisons
-- **Key Columns**:
-  - `satisfaction_score` (numerical): Employee satisfaction (1-10)
-  - `tenure_years` (numerical): Years with company
-  - `department` (categorical): Work department
-  - `remote_work` (categorical): Work arrangement
-  - `salary_band` (categorical): Compensation level
+**Structure:**
+- `order_id`: Unique order identifier
+- `customer_id`: Customer identifier
+- `order_date`: Date of order
+- `product_category`: Product category name
+- `product_name`: Product name
+- `quantity`: Number of items ordered
+- `unit_price`: Price per unit
+- `order_value`: Total order value
+- `payment_method`: Payment type used
+- `shipping_address`: Delivery address
+- `order_status`: Current order status
+- `delivery_date`: Actual delivery date
 
-### 3. Product Performance (`product_performance.csv`)
-- **Description**: Product sales and inventory metrics
-- **Format**: CSV
-- **Rows**: 20 products
-- **Use Cases**: Product analysis, inventory optimization, supplier evaluation
-- **Key Columns**:
-  - `monthly_sales` (numerical): Units sold per month
-  - `inventory_level` (numerical): Current stock
-  - `rating` (numerical): Customer rating (1-5)
-  - `category` (categorical): Product category
-  - `supplier` (categorical): Supplier name
-  - `launch_date` (temporal): Product launch date
-
-## Usage Examples
-
-### Loading Datasets
+**Usage Example:**
 ```python
-# Load e-commerce data
-load_dataset('data/ecommerce_orders.json', 'ecommerce')
+await load_dataset(
+    file_path="data/ecommerce_orders.json",
+    dataset_name="orders"
+)
 
-# Load employee survey
-load_dataset('data/employee_survey.csv', 'employees')
-
-# Load product data
-load_dataset('data/product_performance.csv', 'products')
+# Analyze by category
+await segment_by_column(
+    dataset_name="orders",
+    column_name="product_category"
+)
 ```
 
-### Analysis Examples
+### employee_survey.csv
+Employee satisfaction survey results.
 
-#### Segmentation Analysis
+**Structure:**
+- `employee_id`: Employee identifier
+- `department`: Department name
+- `years_at_company`: Tenure in years
+- `satisfaction_score`: Overall satisfaction (1-10)
+- `work_life_balance`: Work-life balance rating (1-10)
+- `compensation_satisfaction`: Compensation satisfaction (1-10)
+- `career_development`: Career development opportunities (1-10)
+- `management_quality`: Management quality rating (1-10)
+- `would_recommend`: Would recommend company (Yes/No)
+- `survey_date`: Date survey was completed
+
+**Usage Example:**
 ```python
-# Analyze orders by region
-segment_by_column('ecommerce', 'region')
+await load_dataset(
+    file_path="data/employee_survey.csv",
+    dataset_name="survey"
+)
 
-# Compare employees by department
-segment_by_column('employees', 'department')
-
-# Group products by category
-segment_by_column('products', 'category')
+# Find correlations
+await find_correlations(
+    dataset_name="survey",
+    threshold=0.3
+)
 ```
 
-#### Correlation Analysis
-```python
-# Find relationships in employee data
-find_correlations('employees')
+### product_performance.csv
+Product sales and performance metrics.
 
-# Analyze product metrics
-find_correlations('products', ['monthly_sales', 'rating', 'inventory_level'])
+**Structure:**
+- `product_id`: Product identifier
+- `product_name`: Product name
+- `category`: Product category
+- `launch_date`: Product launch date
+- `monthly_sales`: Sales for the month
+- `revenue`: Revenue generated
+- `profit_margin`: Profit margin percentage
+- `customer_rating`: Average customer rating (1-5)
+- `return_rate`: Product return rate
+- `inventory_level`: Current inventory
+- `marketing_spend`: Marketing expenditure
+- `competitive_index`: Market competitiveness score
+
+**Usage Example:**
+```python
+await load_dataset(
+    file_path="data/product_performance.csv",
+    dataset_name="products"
+)
+
+# Time series analysis
+await time_series_analysis(
+    dataset_name="products",
+    date_column="launch_date",
+    value_column="monthly_sales"
+)
 ```
 
-#### Visualization
-```python
-# Order value distribution
-create_chart('ecommerce', 'histogram', 'order_value')
+## Additional Datasets
 
-# Sales by product category
-create_chart('products', 'bar', 'category', 'monthly_sales')
+The directory also contains real estate datasets:
+- `zillow_rent_data.csv` - Rental price data by region
+- `zillow_home_values_*.csv` - Home value data for various cities
+- `n_movies.csv` - Movie dataset for entertainment analytics
 
-# Satisfaction vs tenure
-create_chart('employees', 'scatter', 'tenure_years', 'satisfaction_score')
+## Testing with Sample Data
+
+These datasets are used in the test suite to validate all analytics functions:
+
+```bash
+# Run tests using sample data
+uv run python -m pytest tests/ -v
 ```
 
-#### Time Series Analysis
-```python
-# Order trends over time
-time_series_analysis('ecommerce', 'order_date', 'order_value')
-
-# Product launch timeline
-time_series_analysis('products', 'launch_date', 'monthly_sales')
-```
-
-#### Data Quality Assessment
-```python
-# Check data quality
-validate_data_quality('ecommerce')
-validate_data_quality('employees')
-validate_data_quality('products')
-```
-
-## Dataset Characteristics
-
-| Dataset | Numerical Cols | Categorical Cols | Temporal Cols | Suggested Analyses |
-|---------|----------------|------------------|---------------|-------------------|
-| E-commerce | 1 | 5 | 1 | Segmentation, Time Series |
-| Employees | 2 | 3 | 0 | Correlation, Segmentation |
-| Products | 3 | 3 | 1 | Correlation, Time Series |
-
-## Testing Scenarios
-
-These datasets are designed to test various analytics capabilities:
-
-1. **Schema Discovery**: Different data types and formats
-2. **Segmentation**: Multiple categorical variables for grouping
-3. **Correlation**: Numerical relationships to explore
-4. **Time Series**: Date columns for temporal analysis
-5. **Data Quality**: Clean data with good coverage
-6. **Visualization**: Various chart types and combinations
-7. **Cross-Dataset**: Potential for merging and comparison
-
-## Extending the Datasets
-
-You can modify these datasets or add new ones by:
-1. Adding more rows for larger-scale testing
-2. Introducing missing values to test data quality features
-3. Creating related datasets for merge testing
-4. Adding more numerical columns for advanced correlation analysis
-5. Including text columns for natural language processing features
+The test suite validates:
+- Data loading and parsing
+- Statistical calculations
+- Visualization generation
+- Data quality checks
+- Cross-dataset operations

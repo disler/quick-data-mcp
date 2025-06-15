@@ -10,4 +10,5 @@ dependencies = [
     "plotly>=6.1.2",
     "pytest>=8.3.5",
     "pytest-asyncio>=1.0.0",
+    "psutil>=5.9.0",
 ]

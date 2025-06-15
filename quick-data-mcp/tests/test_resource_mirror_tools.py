@@ -159,14 +159,30 @@ class TestResourceMirrorTools:
 
     async def test_dataset_specific_tools_with_loaded_data(self):
         """Test dataset-specific tools when datasets are loaded."""
-        # First check if any datasets are loaded
+        # Import the load_dataset function to ensure we have data loaded
+        from mcp_server.server import load_dataset
+        
+        # Load a test dataset if none are loaded
         datasets_result = await resource_datasets_loaded()
         loaded_datasets_list = datasets_result.get("datasets", [])
         
         if not loaded_datasets_list:
-            # Skip this test if no datasets are loaded
-            pytest.skip("No datasets loaded for testing dataset-specific tools")
-            return
+            # Load a sample dataset for testing
+            test_dataset_path = "data/employee_survey.csv"
+            test_dataset_name = "test_employee_survey"
+            load_result = await load_dataset(test_dataset_path, test_dataset_name)
+            if load_result.get("status") == "error":
+                # If loading fails, try alternative dataset
+                test_dataset_path = "data/ecommerce_orders.json"
+                test_dataset_name = "test_ecommerce_orders"
+                load_result = await load_dataset(test_dataset_path, test_dataset_name)
+            
+            # Refresh the datasets list
+            datasets_result = await resource_datasets_loaded()
+            loaded_datasets_list = datasets_result.get("datasets", [])
+            
+            if not loaded_datasets_list:
+                pytest.fail("Could not load any test dataset for testing dataset-specific tools")
         
         # Use the first loaded dataset for testing
         dataset_name = loaded_datasets_list[0]["name"]
