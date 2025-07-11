@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/disler-quick-data-mcp-badge.png)](https://mseep.ai/app/disler-quick-data-mcp)
+
 # MCP From Zero: Quick Data
 > Purpose: Learn to build Powerful Model Context Protocol (MCP) servers by scaling tools into reusable agentic workflows (ADWs aka Prompts w/tools).
 
